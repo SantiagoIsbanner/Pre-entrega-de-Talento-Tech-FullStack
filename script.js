@@ -49,62 +49,51 @@ const imagenesPorCarrusel = {
 const indices = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Carruseles
-  document.querySelectorAll('.anterior').forEach(btn =>
-    btn.addEventListener('click', () => cambiarImagen(btn.dataset.id, -1))
-  );
-  document.querySelectorAll('.siguiente').forEach(btn =>
-    btn.addEventListener('click', () => cambiarImagen(btn.dataset.id, 1))
-  );
-
-  // Abrir modal al clickear miniatura
-  document.querySelectorAll('.miniatura').forEach(img =>
-    img.addEventListener('click', () => {
-      document.getElementById(img.dataset.modal).style.display = 'block';
-      // Mostrar imágenes previa, principal y siguiente correctas
-      const id = img.dataset.modal.split('-')[1];
-      mostrarCarruselInicial(id);
-    })
-  );
-
-  // Cerrar modal
-  document.querySelectorAll('.cerrar').forEach(btn =>
-    btn.addEventListener('click', () => {
-      document.getElementById(btn.dataset.modal).style.display = 'none';
-    })
-  );
-
-  // Cerrar modal al hacer click fuera del contenido
-  document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('mousedown', function(e) {
-      if (e.target === modal) {
-        modal.style.display = 'none';
+  // Carruseles (solo si existen)
+  if (document.querySelectorAll('.anterior').length) {
+    document.querySelectorAll('.anterior').forEach(btn =>
+      btn.addEventListener('click', () => cambiarImagen(btn.dataset.id, -1))
+    );
+    document.querySelectorAll('.siguiente').forEach(btn =>
+      btn.addEventListener('click', () => cambiarImagen(btn.dataset.id, 1))
+    );
+    document.querySelectorAll('.miniatura').forEach(img =>
+      img.addEventListener('click', () => {
+        document.getElementById(img.dataset.modal).style.display = 'block';
+        const id = img.dataset.modal.split('-')[1];
+        mostrarCarruselInicial(id);
+      })
+    );
+    document.querySelectorAll('.cerrar').forEach(btn =>
+      btn.addEventListener('click', () => {
+        document.getElementById(btn.dataset.modal).style.display = 'none';
+      })
+    );
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.addEventListener('mousedown', function(e) {
+        if (e.target === modal) modal.style.display = 'none';
+      });
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal').forEach(modal => {
+          if (modal.style.display === 'block') modal.style.display = 'none';
+        });
       }
     });
-  });
+  }
 
-  // Cerrar modal con tecla Escape
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.modal').forEach(modal => {
-        if (modal.style.display === 'block') {
-          modal.style.display = 'none';
-        }
-      });
-    }
-  });
-
-  // --- PRODUCTOS ---
+  // Productos y carrito (solo si existen)
   const productosLista = document.getElementById('productos-lista');
   const contadorCarrito = document.getElementById('contador-carrito');
   let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-  // Renderiza el contador de carrito
   function renderContadorCarrito() {
-    contadorCarrito.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    if (contadorCarrito) {
+      contadorCarrito.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    }
   }
 
-  // Renderiza productos desde la API dummyjson
   async function cargarProductos() {
     try {
       const res = await fetch('https://dummyjson.com/products?limit=12');
@@ -117,8 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${producto.thumbnail}" alt="${producto.title}">
           <h3>${producto.title}</h3>
           <p>$${producto.price}</p>
-          <button data-id="${producto.id}">Agregar al carrito</button>
-        `;
+          <button data-id="${producto.id}">Agregar al carrito</button>`;
         card.querySelector('button').addEventListener('click', () => agregarAlCarrito(producto));
         productosLista.appendChild(card);
       });
@@ -127,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Agrega producto al carrito
   function agregarAlCarrito(producto) {
     const existe = carrito.find(item => item.id === producto.id);
     if (existe) {
@@ -140,37 +127,69 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarNotificacionCarrito();
   }
 
-  cargarProductos();
-  renderContadorCarrito();
+  if (productosLista) {
+    cargarProductos();
+    renderContadorCarrito();
+  }
 
-  // --- FORMULARIO DE CONTACTO ---
-  const form = document.getElementById('form-contacto');
+  // Formulario de contacto/pedido (solo si existen)
+  const form = document.getElementById('form-contacto') || document.getElementById('form-pedido');
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      const nombre = form.nombre.value.trim();
-      const email = form.email.value.trim();
-      const mensaje = form.mensaje.value.trim();
-      const mensajeDiv = document.getElementById('mensaje-formulario');
-      mensajeDiv.classList.remove('error');
-      // Validación básica
-      if (!nombre || !email || !mensaje) {
-        mensajeDiv.textContent = 'Por favor completa todos los campos.';
-        mensajeDiv.classList.add('error');
+      let nombre = form.nombre?.value.trim() || '';
+      let email = form.email?.value.trim() || '';
+      let mensaje = form.mensaje?.value.trim() || '';
+      let mensajeDiv = document.getElementById('mensaje-formulario');
+      if (mensajeDiv) mensajeDiv.classList.remove('error');
+      if (!nombre || !email || (form.mensaje && !mensaje)) {
+        if (mensajeDiv) {
+          mensajeDiv.textContent = 'Por favor completa todos los campos.';
+          mensajeDiv.classList.add('error');
+        }
         return;
       }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-        mensajeDiv.textContent = 'Correo electrónico no válido.';
-        mensajeDiv.classList.add('error');
+        if (mensajeDiv) {
+          mensajeDiv.textContent = 'Correo electrónico no válido.';
+          mensajeDiv.classList.add('error');
+        }
         return;
       }
-      // Si pasa validación, enviar el formulario
       form.submit();
-      mensajeDiv.textContent = '¡Mensaje enviado!';
+      if (mensajeDiv) mensajeDiv.textContent = '¡Mensaje enviado!';
       form.reset();
     });
   }
+
+  actualizarNotificacionCarrito();
+
+  // Menú desplegable (solo si existen)
+  const dropdownToggle = document.getElementById('dropdownToggle');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  const navDropdown = document.getElementById('navDropdown');
+  if (dropdownToggle && dropdownMenu && navDropdown) {
+    dropdownToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = dropdownMenu.classList.toggle('show');
+      dropdownToggle.setAttribute('aria-expanded', expanded);
+    });
+    dropdownMenu.querySelectorAll('.dropdown-link').forEach(link => {
+      link.addEventListener('click', () => {
+        dropdownMenu.classList.remove('show');
+        dropdownToggle.setAttribute('aria-expanded', false);
+      });
+    });
+    document.addEventListener('click', function(e) {
+      if (!navDropdown.contains(e.target)) {
+        dropdownMenu.classList.remove('show');
+        dropdownToggle.setAttribute('aria-expanded', false);
+      }
+    });
+  }
 });
+
+window.addEventListener('storage', actualizarNotificacionCarrito);
 
 function cambiarImagen(id, dir) {
   const lista = imagenesPorCarrusel[id];
@@ -208,35 +227,4 @@ function actualizarNotificacionCarrito() {
     noti.style.display = total > 0 ? 'inline-block' : 'none';
   }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  actualizarNotificacionCarrito();
-
-  // Menú desplegable por click
-  const dropdownToggle = document.getElementById('dropdownToggle');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  const navDropdown = document.getElementById('navDropdown');
-
-  dropdownToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    const expanded = dropdownMenu.classList.toggle('show');
-    dropdownToggle.setAttribute('aria-expanded', expanded);
-  });
-
-  dropdownMenu.querySelectorAll('.dropdown-link').forEach(link => {
-    link.addEventListener('click', () => {
-      dropdownMenu.classList.remove('show');
-      dropdownToggle.setAttribute('aria-expanded', false);
-    });
-  });
-
-  document.addEventListener('click', function(e) {
-    if (!navDropdown.contains(e.target)) {
-      dropdownMenu.classList.remove('show');
-      dropdownToggle.setAttribute('aria-expanded', false);
-    }
-  });
-});
-
-window.addEventListener('storage', actualizarNotificacionCarrito);
 

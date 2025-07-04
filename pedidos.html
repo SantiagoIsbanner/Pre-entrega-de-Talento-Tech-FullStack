@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <header>
         <h1><a href="index.html">Impresión 3D - Mi Portafolio</a></h1>
         <nav>
@@ -30,55 +29,39 @@
             </a>
         </nav>
     </header>
-
     <main>
-   <div class="formulario-contenedor">
-    <h2>Pedido de Impresión 3D</h2>
-    <form id="form-pedido">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
-
-      <label for="celular">Celular:</label>
-      <input type="tel" id="celular" name="celular" required>
-
-      <label for="email">Correo electrónico:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="pieza">Nombre de la pieza/personaje:</label>
-      <input type="text" id="pieza" name="pieza" required>
-
-      <label for="medidas">Medidas aproximadas (cm):</label>
-      <input type="text" id="medidas" name="medidas" placeholder="Ej: 10x5x8" required>
-
-      <label>
-        <input type="checkbox" id="pintado" name="pintado">
-        ¿Deseás que esté pintado?
-      </label>
-
-      <label for="link">Link (Cults, Thingiverse, etc.):</label>
-      <input type="url" id="link" name="link" placeholder="https://www.thingiverse.com/...">
-
-      <label for="descripcion">Descripción adicional:</label>
-      <textarea id="descripcion" name="descripcion" rows="4" placeholder="Detalles del pedido, colores, acabados, etc."></textarea>
-
-      <button type="submit">Enviar pedido</button>
-    </form>
-
-    <div class="instagram">
-       <p>
-    Sígueme en Instagram: 
-    <a href="https://www.instagram.com/nova_imp" target="_blank" rel="noopener noreferrer">
-      <i class="fab fa-instagram"></i>Nova_imp
-    </a>
-  </p>
-    </div>
-  </div>
+      <div class="formulario-contenedor">
+        <h2>Pedido de Impresión 3D</h2>
+        <form id="form-pedido">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+          <label for="celular">Celular:</label>
+          <input type="tel" id="celular" name="celular" required>
+          <label for="email">Correo electrónico:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="pieza">Nombre de la pieza/personaje:</label>
+          <input type="text" id="pieza" name="pieza" required>
+          <label for="medidas">Medidas aproximadas (cm):</label>
+          <input type="text" id="medidas" name="medidas" placeholder="Ej: 10x5x8" required>
+          <label><input type="checkbox" id="pintado" name="pintado"> ¿Deseás que esté pintado?</label>
+          <label for="link">Link (Cults, Thingiverse, etc.):</label>
+          <input type="url" id="link" name="link" placeholder="https://www.thingiverse.com/...">
+          <label for="descripcion">Descripción adicional:</label>
+          <textarea id="descripcion" name="descripcion" rows="4" placeholder="Detalles del pedido, colores, acabados, etc."></textarea>
+          <button type="submit">Enviar pedido</button>
+        </form>
+        <div class="instagram">
+          <p>Sígueme en Instagram: 
+            <a href="https://www.instagram.com/nova_imp" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-instagram"></i>Nova_imp
+            </a>
+          </p>
+        </div>
+      </div>
     </main>
-
     <footer>
         <p>© 2025 Mis Trabajos en 3D</p>
     </footer>
-
-
+    <script src="script.js"></script>
 </body>
 </html>
