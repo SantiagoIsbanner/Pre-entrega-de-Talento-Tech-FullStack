@@ -1,0 +1,524 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #222;
+}
+.pantalla-gif {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* ocupa el alto total de la pantalla */
+  background-color: #fafafa; /* o el fondo que quieras */
+  padding: 20px;
+}
+
+.pantalla-gif img {
+  width: 300px;        /* ajustá este valor según lo que necesites */
+  max-width: 90vw;
+  height: auto;
+  border-radius: 10px; /* opcional: bordes redondeados */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); /* opcional */
+}
+header {
+  background: #222;
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+header h1 a {
+  color: #fff;
+  text-decoration: none;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex: 1 1 auto;
+}
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: #ff9800;
+}
+
+/* Accesibilidad: Navegación con teclado */
+nav a, button, input, textarea {
+  outline: none;
+}
+nav a:focus, button:focus, input:focus, textarea:focus {
+  outline: 2px solid #ff9800;
+  outline-offset: 2px;
+}
+
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+section {
+  margin-bottom: 3rem;
+}
+
+/* Productos - Flexbox */
+.productos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.producto-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1rem;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+}
+.producto-card:hover {
+  transform: translateY(-5px) scale(1.03);
+}
+.producto-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
+}
+.producto-card h3 {
+  margin: 0.5rem 0 0.2rem 0;
+}
+.producto-card p {
+  margin: 0.2rem 0;
+}
+.producto-card button {
+  margin-top: 0.5rem;
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.producto-card button:hover {
+  background: #e65100;
+}
+
+.carrito-contador {
+  margin-top: 1rem;
+  text-align: right;
+  font-weight: bold;
+}
+
+/* Carrito de compras dinámico */
+#carrito-contador {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#carrito-contador a {
+  background: #ff9800;
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+#carrito-contador a:hover {
+  background: #e65100;
+}
+
+/* Icono de carrito en el header */
+.icono-carrito {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+}
+.carrito-svg svg {
+  vertical-align: middle;
+  width: 28px;
+  height: 28px;
+  stroke: #fff;
+  fill: none;
+}
+.carrito-notificacion {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #ff9800;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  min-width: 22px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  pointer-events: none;
+  transition: background 0.2s;
+  z-index: 10;
+}
+.icono-carrito:focus .carrito-svg svg {
+  stroke: #ff9800;
+}
+
+/* Galería y modal responsivos */
+.contenedor-galeria {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.galeria {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+.contenedor-imagen {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 400px;
+}
+.miniatura {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: block;
+}
+.miniatura:hover {
+  transform: scale(1.05);
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background: rgba(0,0,0,0.8);
+  align-items: center;
+  justify-content: center;
+}
+.modal-contenido {
+  background: #fff;
+  margin: 5vh auto;
+  padding: 2rem 1rem;
+  border-radius: 10px;
+  max-width: 90vw;
+  max-height: 90vh;
+  position: relative;
+  text-align: center;
+}
+.modal .cerrar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: #222;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.carrusel-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.carrusel-preview img.principal {
+  max-width: 80vw;
+  max-height: 60vh;
+  display: block;
+  margin: 0 1rem;
+}
+.carrusel-preview img.previa {
+  max-width: 80px;
+  height: auto;
+  opacity: 0.7;
+  margin: 0 0.5rem;
+}
+.carrusel-preview .carrusel-imgs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+.carrusel-preview .botones {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin: 0.7rem 0 0 0;
+  justify-content: center;
+}
+.carrusel-preview button {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  margin: 0 0.2rem;
+}
+.carrusel-preview button:hover {
+  background: #ff9800;
+}
+/* Reseñas - Grid */
+.reseñas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+.reseña-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.2rem;
+  font-style: italic;
+}
+.reseña-card span {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: #ff9800;
+}
+
+/* Formulario de contacto */
+#form-contacto {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#form-contacto label {
+  font-weight: bold;
+}
+#form-contacto input,
+#form-contacto textarea {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+#form-contacto button {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+#form-contacto button:hover {
+  background: #ff9800;
+}
+#mensaje-formulario {
+  margin-top: 0.5rem;
+  color: #388e3c;
+  font-weight: bold;
+}
+
+/* Mejoras para mensajes de error en formularios */
+input:invalid, textarea:invalid {
+  border-color: #ff9800;
+  background: #fff3e0;
+}
+
+#mensaje-formulario.error {
+  color: #d32f2f;
+}
+
+/* Footer */
+footer {
+  background: #222;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+/* Dropdown menu */
+.nav-item-dropdown {
+  position: relative;
+}
+.nav-item-dropdown > a:after {
+  content: ' ▼';
+  font-size: 0.7em;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: #222;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 0 0 10px 10px;
+  z-index: 100;
+  padding: 0.5rem 0;
+}
+.dropdown.show {
+  display: block;
+}
+.dropdown li {
+  width: 100%;
+}
+.dropdown a {
+  display: block;
+  padding: 0.7rem 1.5rem;
+  color: #fff;
+  text-align: left;
+  font-weight: 400;
+  background: none;
+}
+.dropdown a:hover {
+  background: #ff9800;
+  color: #fff;
+}
+.nav-item-dropdown:hover > .dropdown,
+.nav-item-dropdown:focus-within > .dropdown {
+  display: block;
+}
+
+/* Estilos para el formulario de pedidos */
+.formulario-contenedor {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+#form-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+#form-pedido label {
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+#form-pedido input,
+#form-pedido textarea {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+#form-pedido button {
+  background: #222;
+  color: #fff;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+#form-pedido button:hover {
+  background: #ff9800;
+}
+
+/* Responsividad */
+@media (max-width: 900px) {
+  .galeria {
+    flex-direction: column;
+    align-items: center;
+  }
+  .productos-lista {
+    gap: 1rem;
+  }
+}
+@media (max-width: 600px) {
+  nav ul {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  main {
+    padding: 0 0.5rem;
+  }
+  .productos-lista {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contenedor-galeria {
+    flex-direction: column;
+    align-items: center;
+  }
+  #form-contacto {
+    padding: 1rem;
+  }
+  .dropdown {
+    position: static;
+    min-width: unset;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .formulario-contenedor {
+    padding: 1rem;
+  }
+}
+@media (max-width: 700px) {
+  nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .icono-carrito {
+    position: static;
+    transform: none;
+    align-self: flex-end;
+    margin: 1rem 0 0 0;
+  }
+}

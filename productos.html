@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Trabajos en 3D</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+</head>
+<body>
+
+    <header>
+        <h1><a href="index.html">Impresión 3D - Mi Portafolio</a></h1>
+        <nav>
+            <ul>
+                <li><a href="galeria.html">Galería</a></li>
+                <li><a href="pedidos.html">Pedidos</a>
+                </li><li class="nav-item-dropdown" id="navDropdown">
+          <a href="#inicio" id="dropdownToggle" aria-haspopup="true" aria-expanded="false">Inicio</a>
+          <ul class="dropdown" id="dropdownMenu">
+            <li><a href="#productos" class="dropdown-link">Productos</a></li>
+            <li><a href="#reseñas" class="dropdown-link">Reseñas</a></li>
+            <li><a href="#contacto" class="dropdown-link">Contacto</a></li>
+          </ul>
+        </li>
+            </ul>
+            <a href="carrito.html" class="icono-carrito" aria-label="Ver carrito">
+        <span class="carrito-svg">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </span>
+        <span class="carrito-notificacion" id="carrito-notificacion">0</span>
+      </a>
+        </nav>
+    </header>
+
+    <main>
+      <main>
+    <section id="inicio">
+      <h2>Bienvenido a mi portafolio de impresión 3D</h2>
+      <p>Descubre mis trabajos, productos personalizados y más.</p>
+    </section>
+    <section id="productos">
+      <h2>Productos</h2>
+      <div id="productos-lista" class="productos-lista">
+        <!-- Aquí se renderizarán las cards de productos desde la API -->
+      </div>
+      <div id="carrito-contador" class="carrito-contador">
+        Carrito: <span id="contador-carrito">0</span> productos
+        <a href="carrito.html">Ver carrito</a>
+      </div>
+    </section>
+   
+    <section id="reseñas">
+      <h2>Reseñas</h2>
+      <div class="reseñas-grid">
+        <!-- Aquí se mostrarán reseñas en formato grid -->
+        <div class="reseña-card">
+          <p>¡Excelente calidad y atención!</p>
+          <span>- Cliente 1</span>
+        </div>
+        <div class="reseña-card">
+          <p>El producto superó mis expectativas.</p>
+          <span>- Cliente 2</span>
+        </div>
+        <div class="reseña-card">
+          <p>Muy recomendable, volveré a comprar.</p>
+          <span>- Cliente 3</span>
+        </div>
+      </div>
+    </section>
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <form action="https://formspree.io/f/your-form-id" method="POST" id="form-contacto">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+        <button type="submit">Enviar</button>
+        <div id="mensaje-formulario"></div>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Impresión 3D - Mi Portafolio. Todos los derechos reservados.</p>
+  </footer>
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras</title>
+  <meta name="description" content="Portafolio de impresión 3D, carrito de compras, productos personalizados, galería y contacto.">
+  <meta name="keywords" content="impresión 3D, carrito, portafolio, productos, galería, contacto">
+  <meta name="author" content="Tu Nombre">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1><a href="index.html">Impresión 3D - Mi Portafolio</a></h1>
+    <nav>
+      <ul>
+        <li><a href="galeria.html">Galería</a></li>
+        <li><a href="pedidos.html">Pedidos</a></li>
+        <li><a href="productos.html">Productos</a></li>
+      </ul>
+      <a href="carrito.html" class="icono-carrito" aria-label="Ver carrito">
+        <span class="carrito-svg">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </span>
+        <span class="carrito-notificacion" id="carrito-notificacion">0</span>
+      </a>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h2>Carrito de Compras</h2>
+      <div class="carrito-lista" id="carrito-lista">
+        <!-- Aquí se renderizan los productos del carrito -->
+      </div>
+      <div class="carrito-total" id="carrito-total"></div>
+      <div class="carrito-botones">
+        <button id="vaciar-carrito">Vaciar carrito</button>
+        <button id="finalizar-compra">Finalizar compra</button>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Impresión 3D - Mi Portafolio. Todos los derechos reservados.</p>
+  </footer>
+  <script>
+    // --- Lógica del carrito ---
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const carritoLista = document.getElementById('carrito-lista');
+    const carritoTotal = document.getElementById('carrito-total');
+    const vaciarBtn = document.getElementById('vaciar-carrito');
+    const finalizarBtn = document.getElementById('finalizar-compra');
+
+    function renderCarrito() {
+      carritoLista.innerHTML = '';
+      if (carrito.length === 0) {
+        carritoLista.innerHTML = '<p>El carrito está vacío.</p>';
+        carritoTotal.textContent = '';
+        return;
+      }
+      let total = 0;
+      carrito.forEach((item, idx) => {
+        total += item.price * item.cantidad;
+        const div = document.createElement('div');
+        div.className = 'carrito-item';
+        div.innerHTML = `
+          <img src="${item.thumbnail}" alt="${item.title}">
+          <div class="carrito-item-info">
+            <h4>${item.title}</h4>
+            <p>Precio: $${item.price}</p>
+          </div>
+          <div class="carrito-item-cantidad">
+            <button aria-label="Disminuir cantidad" onclick="cambiarCantidad(${idx}, -1)">-</button>
+            <span>${item.cantidad}</span>
+            <button aria-label="Aumentar cantidad" onclick="cambiarCantidad(${idx}, 1)">+</button>
+          </div>
+          <button aria-label="Eliminar producto" onclick="eliminarProducto(${idx})">🗑️</button>
+        `;
+        carritoLista.appendChild(div);
+      });
+      carritoTotal.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    window.cambiarCantidad = function(idx, dir) {
+      if (carrito[idx]) {
+        carrito[idx].cantidad += dir;
+        if (carrito[idx].cantidad < 1) carrito[idx].cantidad = 1;
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        renderCarrito();
+      }
+    }
+
+    window.eliminarProducto = function(idx) {
+      carrito.splice(idx, 1);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      renderCarrito();
+    }
+
+    vaciarBtn.onclick = () => {
+      carrito = [];
+      localStorage.removeItem('carrito');
+      renderCarrito();
+    };
+
+    finalizarBtn.onclick = () => {
+      carrito = [];
+      localStorage.removeItem('carrito');
+      window.location.href = 'index.html';
+    };
+
+    renderCarrito();
+  </script>
+</body>
+</html>
